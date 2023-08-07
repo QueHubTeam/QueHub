@@ -1,5 +1,4 @@
-﻿
-namespace QueHub.Domain.Exceptions.AnswerDislikes;
+﻿namespace QueHub.Domain.Exceptions.AnswerDislikes;
 
 public class AnswerDislikeNotFoundException : NotFoundException
 {
