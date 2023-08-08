@@ -16,7 +16,7 @@ public class Repository<T> : IRepository<T> where T : class
         table = dbContext.Set<T>();
     }
 
-    public void Create(T entity)
+    public void Add(T entity)
     {
         table.Add(entity);
     }
@@ -26,12 +26,12 @@ public class Repository<T> : IRepository<T> where T : class
         table.Remove(entity);
     }
 
-    public T Get(long id)
+    public T Select(long id)
     {
         return table.Find(id);
     }
 
-    public IQueryable<T> GetAll()
+    public IQueryable<T> SelectAll()
     {
         return table.AsNoTracking();
     }
