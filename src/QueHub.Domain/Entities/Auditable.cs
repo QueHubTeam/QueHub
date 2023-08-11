@@ -2,7 +2,7 @@
 
 public abstract class Auditable : BaseEntity
 {
-    public DateTime Create_at { get; set; }
+    public DateTime CreateAt { get; set; }
 
-    public DateTime Update_at { get; set; }
+    public DateTime UpdateAt { get; set; }
 }
