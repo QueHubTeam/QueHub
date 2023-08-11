@@ -1,4 +1,4 @@
-﻿namespace QueHub.Domain.Entities;
+﻿namespace QueHub.Domain.Commons;
 
 public abstract class Auditable : BaseEntity
 {

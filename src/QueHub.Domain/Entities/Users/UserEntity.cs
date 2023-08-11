@@ -1,4 +1,4 @@
-﻿using QueHub.Domain.Entities;
+﻿using QueHub.Domain.Commons;
 using System.ComponentModel.DataAnnotations;
 
 namespace QueHub.Domain.Entity.User;

@@ -1,4 +1,4 @@
-﻿using QueHub.Domain.Entities;
+﻿using QueHub.Domain.Commons;
 using QueHub.Domain.Entity.Questions;
 using QueHub.Domain.Entity.User;
 
