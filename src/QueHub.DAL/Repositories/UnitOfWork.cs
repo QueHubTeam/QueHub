@@ -1,5 +1,6 @@
 ﻿using QueHub.DAL.Constexts;
 using QueHub.DAL.IRepositories;
+using QueHub.DAL.Repository;
 using QueHub.Domain.Entity.AnswerDislikes;
 using QueHub.Domain.Entity.AnswerLikes;
 using QueHub.Domain.Entity.Answers;
@@ -16,10 +17,18 @@ public class UnitOfWork : IUnitOfWork
 
     private readonly QueHubDbContext dbContext;
 
-    public UnitOfWork()
+    public UnitOfWork(QueHubDbContext dbContext)
     {
-        this.dbContext = new QueHubDbContext();
+        this.dbContext = dbContext;
 
+        UserRepository = new Repository<UserEntity>(dbContext);
+        QuestionRepository = new Repository<QuestionEntity>(dbContext);
+        AnswerRepository = new Repository<AnswerEntity>(dbContext);
+        CategoryRepository = new Repository<CategoryEntity>(dbContext);
+        QuestionLikeRepository = new Repository<QuestionLikeEntity>(dbContext);
+        QuestionDislikeRepository = new Repository<QuestionDislikeEntity>(dbContext);
+        AnswerLikeRepository = new Repository<AnswerLikeEntity>(dbContext);
+        AnswerDislikeRepository = new Repository<AnswerDislikeEntity>(dbContext);
     }
 
     public IRepository<UserEntity> UserRepository { get; }
@@ -40,7 +49,7 @@ public class UnitOfWork : IUnitOfWork
 
     public void Dispose()
     {
-        GC.SuppressFinalize(this);
+        GC.SuppressFinalize(true);
     }
 
     public async Task<bool> SaveAsync()
