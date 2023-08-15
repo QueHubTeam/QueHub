@@ -8,11 +8,11 @@ public interface IRepository<T> where T : class
 
     ValueTask<T> UpdateAsync(T entity);
 
-    ValueTask<bool> DeleteAsync(T entity);
+    ValueTask<bool> DeleteAsync(Expression<Func<T, bool>> expression);
 
-    ValueTask<T> SelectAsync(Expression<Func<T, bool>> expression = null, string[] includes = null);
+    ValueTask<T> SelectAsync(Expression<Func<T, bool>> expression, string[] includes = null);
 
-    IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null, string[] includes = null);
+    IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null, string[] includes = null, bool isTracking = true);
 
-    ValueTask SaveChangesAsync();
+    ValueTask SaveAsync();
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using QueHub.DAL.Constexts;
 using QueHub.DAL.IRepositories;
+using System.Linq.Expressions;
 
 namespace QueHub.DAL.Repository;
 
@@ -15,33 +17,50 @@ public class Repository<T> : IRepository<T> where T : class
         table = dbContext.Set<T>();
     }
 
-    public void Add(T entity)
+    public async ValueTask<T> AddAsync(T entity)
     {
-        table.Add(entity);
+        await table.AddAsync(entity);
+
+        return entity;
     }
 
-    public void Delete(T entity)
+    public async ValueTask<bool> DeleteAsync(Expression<Func<T, bool>> expression)
     {
-        table.Remove(entity);
+        var entity = await this.SelectAsync(expression);
+
+        if (entity is not null)
+        {
+            table.Remove(entity);
+            return true;
+        }
+
+        return false;
     }
 
-    public T Select(long id)
+    public async ValueTask<T> SelectAsync(Expression<Func<T, bool>> expression, string[] includes = null)
+            => await this.SelectAll(expression, includes).FirstOrDefaultAsync();
+
+    public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null, string[] includes = null, bool isTracking = true)
     {
-        return table.Find(id);
+        var query = expression is null ? isTracking ? table : table.AsNoTracking() 
+            : isTracking ? table.Where(expression) : table.Where(expression).AsNoTracking();
+
+        if(includes is not null)
+            foreach(var include in includes)
+                query = query.Include(include);
+        
+        return query;
     }
 
-    public IQueryable<T> SelectAll()
+    public async ValueTask<T> UpdateAsync(T entity)
     {
-        return table.AsNoTracking();
+        EntityEntry<T> entry = this.dbContext.Update(entity);
+
+        return entry.Entity;
     }
 
-    public void Update(T entity)
+    public async ValueTask SaveAsync()
     {
-        dbContext.Entry<T>(entity).State = EntityState.Modified;
-    }
-
-    public void SaveChanges()
-    {
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync();
     }
 }
