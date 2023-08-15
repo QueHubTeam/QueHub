@@ -1,16 +1,18 @@
-﻿namespace QueHub.DAL.IRepositories;
+﻿using System.Linq.Expressions;
+
+namespace QueHub.DAL.IRepositories;
 
 public interface IRepository<T> where T : class
 {
-    void Add(T entity);
+    ValueTask<T> AddAsync(T entity);
 
-    void Update(T entity);
+    ValueTask<T> UpdateAsync(T entity);
 
-    void Delete(T entity);
+    ValueTask<bool> DeleteAsync(T entity);
 
-    T Select(long id);
+    ValueTask<T> SelectAsync(Expression<Func<T, bool>> expression = null, string[] includes = null);
 
-    IQueryable<T> SelectAll();
+    IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null, string[] includes = null);
 
-    void SaveChanges();
+    ValueTask SaveChangesAsync();
 }
