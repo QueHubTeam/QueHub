@@ -12,7 +12,7 @@ using QueHub.DAL.Constexts;
 namespace QueHub.DAL.Migrations
 {
     [DbContext(typeof(QueHubDbContext))]
-    [Migration("20230807125027_InitialCreate")]
+    [Migration("20230816015338_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -36,10 +36,13 @@ namespace QueHub.DAL.Migrations
                     b.Property<long>("AnswerId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -65,10 +68,13 @@ namespace QueHub.DAL.Migrations
                     b.Property<long>("AnswerId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -95,13 +101,16 @@ namespace QueHub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -124,9 +133,18 @@ namespace QueHub.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -141,13 +159,16 @@ namespace QueHub.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -170,13 +191,16 @@ namespace QueHub.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -206,18 +230,21 @@ namespace QueHub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -240,7 +267,7 @@ namespace QueHub.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("Create_at")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
@@ -259,6 +286,9 @@ namespace QueHub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(25)
@@ -275,7 +305,7 @@ namespace QueHub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Update_at")
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserName")

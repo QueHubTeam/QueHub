@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using QueHub.DAL.Constans;
 using QueHub.Domain.Entity.AnswerDislikes;
 using QueHub.Domain.Entity.AnswerLikes;
 using QueHub.Domain.Entity.Answers;
@@ -13,6 +12,9 @@ namespace QueHub.DAL.Constexts;
 
 public class QueHubDbContext : DbContext
 {
+    public QueHubDbContext(DbContextOptions<QueHubDbContext> options) : base(options)
+    { }
+
     public DbSet<UserEntity> Users { get; set; }
 
     public DbSet<QuestionEntity> Questions { get; set; }
@@ -28,9 +30,4 @@ public class QueHubDbContext : DbContext
     public DbSet<AnswerLikeEntity> AnswerLikes { get; set; }
 
     public DbSet<AnswerDislikeEntity> AnswerDislikes { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql(DbConstans.CONNECTION_STRING);
-    }
 }

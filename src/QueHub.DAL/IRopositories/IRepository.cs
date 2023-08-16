@@ -1,8 +1,9 @@
-﻿using System.Linq.Expressions;
+﻿using QueHub.Domain.Commons;
+using System.Linq.Expressions;
 
 namespace QueHub.DAL.IRepositories;
 
-public interface IRepository<T> where T : class
+public interface IRepository<T> where T : Auditable
 {
     ValueTask<T> AddAsync(T entity);
 

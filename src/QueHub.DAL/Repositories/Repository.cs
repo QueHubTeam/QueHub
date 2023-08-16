@@ -2,15 +2,16 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using QueHub.DAL.Constexts;
 using QueHub.DAL.IRepositories;
+using QueHub.Domain.Commons;
 using System.Linq.Expressions;
 
 namespace QueHub.DAL.Repository;
 
-public class Repository<T> : IRepository<T> where T : class
+public class Repository<T> : IRepository<T> where T : Auditable
 {
     private readonly QueHubDbContext dbContext;
-
     private readonly DbSet<T> table;
+
     public Repository(QueHubDbContext dbContext)
     {
         this.dbContext = dbContext;
@@ -27,7 +28,7 @@ public class Repository<T> : IRepository<T> where T : class
     public async ValueTask<bool> DeleteAsync(Expression<Func<T, bool>> expression)
     {
         var entity = await this.SelectAsync(expression);
-
+        
         if (entity is not null)
         {
             table.Remove(entity);
@@ -38,7 +39,7 @@ public class Repository<T> : IRepository<T> where T : class
     }
 
     public async ValueTask<T> SelectAsync(Expression<Func<T, bool>> expression, string[] includes = null)
-            => await this.SelectAll(expression, includes).FirstOrDefaultAsync();
+            => await this.SelectAll(expression, includes).FirstOrDefaultAsync(t => t.IsDeleted);
 
     public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null, string[] includes = null, bool isTracking = true)
     {
