@@ -12,7 +12,7 @@ using QueHub.DAL.Constexts;
 namespace QueHub.DAL.Migrations
 {
     [DbContext(typeof(QueHubDbContext))]
-    [Migration("20230816015338_InitialCreate")]
+    [Migration("20230816020804_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

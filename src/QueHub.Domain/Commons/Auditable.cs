@@ -2,7 +2,7 @@
 
 public abstract class Auditable : BaseEntity
 {
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; } = false;
 
     public DateTime CreateAt { get; set; }
 

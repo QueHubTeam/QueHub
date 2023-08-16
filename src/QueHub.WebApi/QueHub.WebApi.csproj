@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\QueHub.DAL\QueHub.DAL.csproj" />
     <ProjectReference Include="..\QueHub.Domain\QueHub.Domain.csproj" />
     <ProjectReference Include="..\QueHub.Service\QueHub.Service.csproj" />

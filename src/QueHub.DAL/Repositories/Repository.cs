@@ -31,7 +31,7 @@ public class Repository<T> : IRepository<T> where T : Auditable
         
         if (entity is not null)
         {
-            table.Remove(entity);
+            entity.IsDeleted = true;
             return true;
         }
 
