@@ -1,7 +1,6 @@
-﻿using LexiLearn.Domain.Services;
-using LexiLearn.Service.DTOs.Users;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using QueHub.Service.DTOs.Users;
+using QueHub.Service.Interfaces;
 
 namespace LexiLearn.WebApi.Controllers;
 
