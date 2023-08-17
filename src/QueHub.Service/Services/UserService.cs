@@ -90,7 +90,7 @@ public class UserService : IUserService
     public async Task<bool> CheckCredentialsAsync(string username, string password)
     {
         var user = await unitOfWork.UserRepository.SelectAsync(u => u.UserName == username);
-        if (user is null)
+        if (user is null) { }
             return false;
 
         // Implement password validation logic
@@ -99,7 +99,7 @@ public class UserService : IUserService
     public async Task<bool> ChangePasswordAsync(long userId, string currentPassword, string newPassword)
     {
         var user = await unitOfWork.UserRepository.SelectAsync(u => u.Id == userId);
-        if (user is null)
+        if (user is null) { }
             throw new UserNotFoundException();
 
         // Implement password change logic
