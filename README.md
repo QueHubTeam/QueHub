@@ -2,7 +2,6 @@
 
 Welcome to Awesome Q&A Platform, a robust and user-friendly Question & Answer platform built using ASP.NET. This platform allows users to ask questions, provide answers, and engage in meaningful discussions on various topics.
 
-![Platform Screenshot](screenshot.png)
 
 ## Features
 
