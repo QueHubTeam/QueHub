@@ -1,6 +1,6 @@
 ﻿namespace QueHub.Service.Exceptions.Users;
 
-public class UserAlreadyExistsException : AlreadyExistsExcaption
+public class UserAlreadyExistsException : AlreadyExistsException
 {
 	public UserAlreadyExistsException()
 	{

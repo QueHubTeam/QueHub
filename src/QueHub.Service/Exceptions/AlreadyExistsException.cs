@@ -2,7 +2,7 @@
 
 namespace QueHub.Service.Exceptions;
 
-public class AlreadyExistsExcaption : Exception
+public class AlreadyExistsException : Exception
 {
     public HttpStatusCode StatusCode { get; } = HttpStatusCode.NotFound;
 
