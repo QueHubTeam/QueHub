@@ -1,9 +1,9 @@
-﻿namespace QueHub.Domain.Exceptions.AnswerDislikes;
+﻿namespace QueHub.Service.Exceptions.AnswerLikes;
 
 public class AnswerDislikeNotFoundException : NotFoundException
 {
     public AnswerDislikeNotFoundException()
     {
-        TitleMessage = "Answer like  not found!";
+        TitleMessage = "Answer dislike not found!";
     }
 }

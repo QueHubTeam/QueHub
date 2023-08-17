@@ -1,4 +1,4 @@
-﻿namespace  QueHub.Domain.Exceptions.Categories;
+﻿namespace  QueHub.Service.Exceptions.Categories;
 
 public class CategoryNotFoundException : NotFoundException
 {

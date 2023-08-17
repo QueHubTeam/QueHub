@@ -1,4 +1,4 @@
-﻿namespace QueHub.Domain.Exceptions.Auth;
+﻿namespace QueHub.Service.Exceptions.Auth;
 
 public class VerificationTooManyRequestsException : TooManyRequestException
 {

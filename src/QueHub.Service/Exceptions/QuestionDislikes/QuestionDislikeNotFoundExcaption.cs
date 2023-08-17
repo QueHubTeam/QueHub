@@ -1,4 +1,4 @@
-﻿namespace QueHub.Domain.Exceptions.QuestionDislikes;
+﻿namespace QueHub.Service.Exceptions.QuestionDislikes;
 
 public class QuestionDislikeNotFoundExcaption : NotFoundException
 {

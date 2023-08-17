@@ -1,4 +1,4 @@
-﻿namespace QueHub.Domain.Exceptions.Files;
+﻿namespace QueHub.Service.Exceptions.Files;
 
 public class ImageNotFoundException : NotFoundException
 {

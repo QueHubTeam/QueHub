@@ -1,4 +1,4 @@
-﻿namespace QueHub.Domain.Exceptions.Users;
+﻿namespace QueHub.Service.Exceptions.Users;
 
 public class UserCacheDataExpiredException : ExpiredException
 {

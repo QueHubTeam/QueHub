@@ -1,9 +1,9 @@
-﻿namespace QueHub.Domain.Exceptions.Questions;
+﻿namespace QueHub.Service.Exceptions.Answers;
 
 public class QuestionNotFoundExcaption : NotFoundException
 {
     public QuestionNotFoundExcaption()
     {
-        TitleMessage = "Question not found!";
+        TitleMessage = "Answer not found!";
     }
 }
