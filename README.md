@@ -30,11 +30,6 @@ Welcome to Awesome Q&A Platform, a robust and user-friendly Question & Answer pl
 3. Apply database migrations: `dotnet ef database update`
 4. Run the application: `dotnet run`
 
-## Installation #2
-
-1. Clone this repository: `git clone https://github.com/QueHubTeam/QueHub`
-2. Run bat `updateDB.bat`
-
 ## Contributing
 
 We welcome contributions from the community! To contribute to Awesome Q&A Platform, follow these steps:
