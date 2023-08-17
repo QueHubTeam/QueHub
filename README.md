@@ -23,7 +23,6 @@ Welcome to Awesome Q&A Platform, a robust and user-friendly Question & Answer pl
 - ASP.NET Identity for user authentication and authorization.
 - HTML, CSS, and JavaScript for the frontend interface.
 - SQL Server for robust and scalable database management.
-- [Any other technologies or libraries you're using...]
 
 ## Installation
 
