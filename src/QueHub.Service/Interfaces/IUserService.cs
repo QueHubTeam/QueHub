@@ -10,6 +10,8 @@ public interface IUserService
 
     Task<bool> DeleteAsync(long id);
 
+    Task<string> GetProfileImageAsync(long userId);
+
     Task<UserResultDto> GetByIdAsync(long id);
 
     Task<IEnumerable<UserResultDto>> GetAllAsync();

@@ -1,67 +1,97 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QueHub.Service.DTOs.Users;
 using QueHub.Service.Interfaces;
+using QueHub.WebApi.controllers;
 
-namespace LexiLearn.WebApi.Controllers;
+namespace QueHub.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-
-public class UserController : ControllerBase
+public class UserController : BaseController
 {
-    private readonly IUserService userService;
+    private readonly IUserService _userService;
+    private readonly IQuestionService _questionService;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, IQuestionService questionService)
     {
-        this.userService = userService;
+        _userService = userService;
+        _questionService = questionService;
     }
 
-    [HttpGet(Name = "all")]
-    public async Task<IActionResult> GetAll()
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateUser(UserCreationDto user)
     {
-        var response = await userService.GetAllAsync();
-        return Ok(response.Data);
+        var createdUser = await _userService.CreateAsync(user);
+        return Ok(createdUser);
     }
 
-    [HttpGet("{id}", Name = "getById")]
-    public async Task<IActionResult> Get(int id)
+    [HttpPut("update")]
+    public async Task<IActionResult> UpdateUser(UserUpdateDto user)
     {
-        var response = await userService.GetByIdAsync(id);
-        return Ok(response.Data);
+        var updatedUser = await _userService.UpdateAsync(user);
+        return Ok(updatedUser);
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> Post(long id)
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteUser(long id)
     {
-        var response = await userService.DeleteAsync(id);
-        return Ok(response.Data);
+        var result = await _userService.DeleteAsync(id);
+        return Ok(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Post(UserCreationDto dto)
+    [HttpGet("get/{id}")]
+    public async Task<IActionResult> GetUserById(long id)
     {
-        var response = await userService.CreateAsync(dto);
-        return Ok(response.Data);
+        var user = await _userService.GetByIdAsync(id);
+        return Ok(user);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> Put(UserUpdateDto dto)
+    [HttpGet("getall")]
+    public async Task<IActionResult> GetAllUsers()
     {
-        var response = await userService.UpdateAsync(dto);
-        return Ok(response.Data);
+        var users = await _userService.GetAllAsync();
+        return Ok(users);
     }
 
-    [HttpGet("checkemail")]
-    public async Task<IActionResult> IsExistEmail(string email)
+    [HttpGet("getbyname/{name}")]
+    public async Task<IActionResult> GetUsersByName(string name)
     {
-        var response = await userService.IsExsistEmailAsync(email);
-        return Ok(response.Data);
+        var users = await _userService.GetAllByNameAsync(name);
+        return Ok(users);
     }
 
-    [HttpGet("checkusername")]
-    public async Task<IActionResult> IsExistUsername(string username)
+    [HttpGet("getbyusername/{username}")]
+    public async Task<IActionResult> GetUsersByUsername(string username)
     {
-        var response = await userService.IsExsistUsernameAsync(username);
-        return Ok(response.Data);
+        var users = await _userService.GetAllByUsernameAsync(username);
+        return Ok(users);
+    }
+
+    [HttpGet("checkcredentials")]
+    public async Task<IActionResult> CheckCredentials(string username, string password)
+    {
+        var isValid = await _userService.CheckCredentialsAsync(username, password);
+        return Ok(isValid);
+    }
+
+    [HttpPost("changepassword")]
+    public async Task<IActionResult> ChangePassword(long userId, string currentPassword, string newPassword)
+    {
+        var result = await _userService.ChangePasswordAsync(userId, currentPassword, newPassword);
+        return Ok(result);
+    }
+
+    [HttpGet("getuserprofileimage/{userId}")]
+    public async Task<IActionResult> GetUserProfileImage(long userId)
+    {
+        var imagePath = await _userService.GetProfileImageAsync(userId);
+        return Ok(imagePath);
+    }
+
+    [HttpGet("getquestionsbyuser/{userId}")]
+    public async Task<IActionResult> GetQuestionsByUserId(long userId)
+    {
+        var questions = await _questionService.GetByUserIdAsync(userId);
+        return Ok(questions);
     }
 }
