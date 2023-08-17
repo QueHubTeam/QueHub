@@ -21,7 +21,7 @@ namespace QueHub.Service.Services
         public async Task<UserResultDto> CreateUserAsync(UserCreationDto userDto)
         {
             var existingUser = await unitOfWork.UserRepository.SelectAsync(u => u.Email == userDto.Email);
-            if (existingUser != null)
+            if (existingUser is not null)
                 throw new UserAlreadyExistsException();
 
             var newUser = mapper.Map<UserEntity>(userDto);
@@ -34,7 +34,7 @@ namespace QueHub.Service.Services
         public async Task<UserResultDto> UpdateUserAsync(UserUpdateDto userDto)
         {
             var existingUser = await unitOfWork.UserRepository.SelectAsync(u => u.Id == userDto.Id);
-            if (existingUser == null)
+            if (existingUser is null)
                 throw new UserNotFoundException();
 
             mapper.Map(userDto, existingUser);
@@ -47,11 +47,10 @@ namespace QueHub.Service.Services
         public async Task<bool> DeleteUserAsync(long id)
         {
             var user = await unitOfWork.UserRepository.SelectAsync(u => u.Id == id);
-            if (user == null)
+            if (user is null)
                 throw new UserNotFoundException();
 
-            user.IsDeleted = true;
-            await unitOfWork.UserRepository.UpdateAsync(user);
+            await unitOfWork.UserRepository.DeleteAsync(x => x == user);
             await unitOfWork.SaveAsync();
 
             return true;
@@ -60,7 +59,7 @@ namespace QueHub.Service.Services
         public async Task<UserResultDto> GetUserByIdAsync(long id)
         {
             var user = await unitOfWork.UserRepository.SelectAsync(u => u.Id == id);
-            if (user == null)
+            if (user is null)
                 throw new UserNotFoundException();
 
             return mapper.Map<UserResultDto>(user);
@@ -82,14 +81,16 @@ namespace QueHub.Service.Services
 
         public async Task<IEnumerable<UserResultDto>> GetAllUsersByUsernameAsync(string username)
         {
-            var users = unitOfWork.UserRepository.SelectAll(u => u.UserName == username);
+            var users = unitOfWork.UserRepository
+                .SelectAll(u => u.UserName.StartsWith(username.ToLower().Trim()));
+            
             return mapper.Map<IEnumerable<UserResultDto>>(users);
         }
 
         public async Task<bool> CheckCredentialsAsync(string username, string password)
         {
             var user = await unitOfWork.UserRepository.SelectAsync(u => u.UserName == username);
-            if (user == null)
+            if (user is null)
                 return false;
 
             // Implement password validation logic
@@ -98,7 +99,7 @@ namespace QueHub.Service.Services
         public async Task<bool> ChangePasswordAsync(long userId, string currentPassword, string newPassword)
         {
             var user = await unitOfWork.UserRepository.SelectAsync(u => u.Id == userId);
-            if (user == null)
+            if (user is null)
                 throw new UserNotFoundException();
 
             // Implement password change logic
@@ -107,10 +108,10 @@ namespace QueHub.Service.Services
         public async Task<bool> UpdateUserRatingAsync(long userId, long newRating)
         {
             var user = await unitOfWork.UserRepository.SelectAsync(u => u.Id == userId);
-            if (user == null)
+            if (user is null)
                 throw new UserNotFoundException();
 
-            user.Rating = newRating;
+            user.Rating += newRating;
             await unitOfWork.UserRepository.UpdateAsync(user);
             await unitOfWork.SaveAsync();
 
@@ -120,7 +121,7 @@ namespace QueHub.Service.Services
         public async Task<bool> UpdateUserProfileImageAsync(long userId, string imagePath)
         {
             var user = await unitOfWork.UserRepository.SelectAsync(u => u.Id == userId);
-            if (user == null)
+            if (user is null)
                 throw new UserNotFoundException();
 
             user.ImagePath = imagePath;
