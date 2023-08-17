@@ -3,9 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using QueHub.DAL.Constexts;
 using QueHub.DAL.IRepositories;
 using QueHub.DAL.Repository;
-using QueHub.Service.Interfaces;
 using QueHub.Service.Mappers;
-using QueHub.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
