@@ -16,6 +16,6 @@ public static class ServicesCollection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IQuestionService, QuestionService>();
-        //services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserService, UserService>();
     }
 }
