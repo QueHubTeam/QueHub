@@ -25,6 +25,10 @@ public class UserService : IUserService
         var existingUser = await _unitOfWork.UserRepository.SelectAsync(u => u.Email == userDto.Email);
         if (existingUser is not null)
             throw new UserAlreadyExistsException();
+        
+        existingUser = await _unitOfWork.UserRepository.SelectAsync(u => u.UserName == userDto.UserName);
+        if (existingUser is not null)
+            throw new UserAlreadyExistsException();
 
         var newUser = mapper.Map<UserEntity>(userDto);
         await _unitOfWork.UserRepository.AddAsync(newUser);
