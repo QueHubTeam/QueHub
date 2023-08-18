@@ -10,9 +10,6 @@
 *.userosscache
 *.sln.docstates
 
-# Exclude appsettings.json
-appsettings.json
-
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -51,6 +48,9 @@ Generated\ Files/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Exclude appsettings.json
+src/QueHub.WebApi/appsettings.json
 
 # Build Results of an ATL Project
 [Dd]ebugPS/
