@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BermudTravel.DAL.Repository;
 using QueHub.DAL.IRepositories;
 using QueHub.Domain.Entity.User;
 using QueHub.Service.DTOs.Users;
@@ -25,7 +24,7 @@ public class UserService : IUserService
         var existingUser = await _unitOfWork.UserRepository.SelectAsync(u => u.Email == userDto.Email);
         if (existingUser is not null)
             throw new UserAlreadyExistsException();
-        
+
         existingUser = await _unitOfWork.UserRepository.SelectAsync(u => u.UserName == userDto.UserName);
         if (existingUser is not null)
             throw new UserAlreadyExistsException();
@@ -103,7 +102,7 @@ public class UserService : IUserService
     {
         var users = _unitOfWork.UserRepository
             .SelectAll(u => u.UserName.StartsWith(username.ToLower().Trim()));
-        
+
         return mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 
@@ -111,7 +110,7 @@ public class UserService : IUserService
     {
         var user = await _unitOfWork.UserRepository.SelectAsync(u => u.UserName == username);
         if (user is null) { }
-            return false;
+        return false;
 
         // Implement password validation logic
     }
@@ -120,7 +119,7 @@ public class UserService : IUserService
     {
         var user = await _unitOfWork.UserRepository.SelectAsync(u => u.Id == userId);
         if (user is null) { }
-            throw new UserNotFoundException();
+        throw new UserNotFoundException();
 
         // Implement password change logic
     }
