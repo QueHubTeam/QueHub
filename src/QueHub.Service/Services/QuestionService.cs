@@ -2,7 +2,6 @@
 using QueHub.DAL.IRepositories;
 using QueHub.Domain.Entity.Questions;
 using QueHub.Service.DTOs.Questions;
-using QueHub.Service.Exceptions;
 using QueHub.Service.Exceptions.Categories;
 using QueHub.Service.Exceptions.Questions;
 using QueHub.Service.Interfaces;
@@ -26,7 +25,7 @@ public class QuestionService : IQuestionService
             .SelectAsync(x => x.Id == dto.CategoryId);
         if (exsistingCategory is null)
             throw new CategoryNotFoundException();
-        
+
         var question = _mapper.Map<QuestionEntity>(dto);
         var addedQuestion = await _unitOfWork.QuestionRepository.AddAsync(question);
         await _unitOfWork.SaveAsync();
