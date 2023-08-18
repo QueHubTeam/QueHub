@@ -1,13 +1,11 @@
-using BermudTravel.DAL.Repository;
 using Microsoft.EntityFrameworkCore;
 using QueHub.DAL.Constexts;
-using QueHub.DAL.IRepositories;
-using QueHub.DAL.Repository;
-using QueHub.Service.Mappers;
 using QueHub.WebApi.Extensions;
+using QueHub.WebApi.Helpers;
+using QueHub.WebApi.Middlewares;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -17,6 +15,21 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<QueHubDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+builder.Configuration["Serilog:WriteTo:0:Args:path"] = AppSettingHelper.GetLogFilePath();
+
+var logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(builder.Configuration)
+        .Enrich.FromLogContext()
+        .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 builder.Services.AddCustomServices();
 
@@ -28,6 +41,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

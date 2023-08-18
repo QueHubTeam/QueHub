@@ -4,6 +4,7 @@ using QueHub.DAL.Repository;
 using QueHub.Service.Interfaces;
 using QueHub.Service.Mappers;
 using QueHub.Service.Services;
+using Serilog;
 
 namespace QueHub.WebApi.Extensions;
 
@@ -15,6 +16,6 @@ public static class ServicesCollection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IQuestionService, QuestionService>();
-        services.AddScoped<IUserService, UserService>();
+        //services.AddScoped<IUserService, UserService>();
     }
 }
