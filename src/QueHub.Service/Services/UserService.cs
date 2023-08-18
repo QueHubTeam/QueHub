@@ -43,6 +43,11 @@ public class UserService : IUserService
         if (existingUser is null)
             throw new UserNotFoundException();
 
+        var username = existingUser.UserName;
+        var existingUser2 = await _unitOfWork.UserRepository.SelectAsync(u => u.UserName == userDto.UserName);
+        if (username != userDto.UserName && existingUser2 is not null)
+            throw new UserAlreadyExistsException();
+
         mapper.Map(userDto, existingUser);
         await _unitOfWork.UserRepository.UpdateAsync(existingUser);
         await _unitOfWork.SaveAsync();
