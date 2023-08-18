@@ -12,7 +12,7 @@ using QueHub.DAL.Constexts;
 namespace QueHub.DAL.Migrations
 {
     [DbContext(typeof(QueHubDbContext))]
-    [Migration("20230816020804_InitialCreate")]
+    [Migration("20230818045717_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,7 +42,7 @@ namespace QueHub.DAL.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -74,7 +74,7 @@ namespace QueHub.DAL.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -110,7 +110,7 @@ namespace QueHub.DAL.Migrations
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -143,7 +143,7 @@ namespace QueHub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
@@ -168,7 +168,7 @@ namespace QueHub.DAL.Migrations
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -200,7 +200,7 @@ namespace QueHub.DAL.Migrations
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -244,7 +244,7 @@ namespace QueHub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("UserId")
@@ -305,7 +305,7 @@ namespace QueHub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserName")

@@ -3,6 +3,8 @@ using QueHub.DAL.IRepositories;
 using QueHub.Domain.Entity.Questions;
 using QueHub.Service.DTOs.Questions;
 using QueHub.Service.Exceptions;
+using QueHub.Service.Exceptions.Categories;
+using QueHub.Service.Exceptions.Questions;
 using QueHub.Service.Interfaces;
 
 namespace QueHub.Service.Services;
@@ -20,6 +22,11 @@ public class QuestionService : IQuestionService
 
     public async Task<QuestionResultDto> CreateAsync(QuestionCreationDto dto)
     {
+        var exsistingCategory = await _unitOfWork.CategoryRepository
+            .SelectAsync(x => x.Id == dto.CategoryId);
+        if (exsistingCategory is null)
+            throw new CategoryNotFoundException();
+        
         var question = _mapper.Map<QuestionEntity>(dto);
         var addedQuestion = await _unitOfWork.QuestionRepository.AddAsync(question);
         await _unitOfWork.SaveAsync();
@@ -32,7 +39,12 @@ public class QuestionService : IQuestionService
     {
         var question = await _unitOfWork.QuestionRepository.SelectAsync(q => q.Id == dto.Id);
         if (question == null)
-            throw new NotFoundException();
+            throw new QuestionNotFoundException();
+
+        var exsistingCategory = await _unitOfWork.CategoryRepository
+            .SelectAsync(x => x.Id == dto.CategoryId);
+        if (exsistingCategory is null)
+            throw new CategoryNotFoundException();
 
         _mapper.Map(dto, question);
         var updatedQuestion = await _unitOfWork.QuestionRepository.UpdateAsync(question);
@@ -46,7 +58,7 @@ public class QuestionService : IQuestionService
     {
         var question = await _unitOfWork.QuestionRepository.SelectAsync(q => q.Id == id);
         if (question == null)
-            throw new NotFoundException();
+            throw new QuestionNotFoundException();
 
         await _unitOfWork.QuestionRepository.DeleteAsync(q => q == question);
         await _unitOfWork.SaveAsync();
@@ -57,7 +69,7 @@ public class QuestionService : IQuestionService
     {
         var question = await _unitOfWork.QuestionRepository.SelectAsync(q => q.Id == id);
         if (question == null)
-            throw new NotFoundException();
+            throw new QuestionNotFoundException();
 
         var resultDto = _mapper.Map<QuestionResultDto>(question);
         return resultDto;
@@ -96,7 +108,7 @@ public class QuestionService : IQuestionService
     {
         var question = await _unitOfWork.QuestionRepository.SelectAsync(q => q.Id == id);
         if (question == null)
-            throw new NotFoundException();
+            throw new QuestionNotFoundException();
 
         question.ImagePath = imagePath;
         await _unitOfWork.SaveAsync();
