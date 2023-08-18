@@ -23,4 +23,8 @@
     <ProjectReference Include="..\QueHub.Domain\QueHub.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\DTOs\" />
+  </ItemGroup>
+
 </Project>
