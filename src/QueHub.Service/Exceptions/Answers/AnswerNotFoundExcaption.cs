@@ -1,8 +1,8 @@
 ﻿namespace QueHub.Service.Exceptions.Answers;
 
-public class QuestionNotFoundException : NotFoundException
+public class AnswerNotFoundException : NotFoundException
 {
-    public QuestionNotFoundException()
+    public AnswerNotFoundException()
     {
         TitleMessage = "Answer not found!";
     }
