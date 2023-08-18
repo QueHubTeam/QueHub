@@ -28,7 +28,7 @@ public class ExceptionHandlerMiddleware
             await context.Response.WriteAsJsonAsync(new Response
             {
                 Code = exception.StatusCode,
-                Message = exception.Message
+                Message = exception.TitleMessage
             });
         }
         catch (UserNotFoundException exception)
@@ -37,7 +37,7 @@ public class ExceptionHandlerMiddleware
             await context.Response.WriteAsJsonAsync(new Response
             {
                 Code = exception.StatusCode,
-                Message = exception.Message
+                Message = exception.TitleMessage
             });
         }
         catch (QuestionNotFoundException exception)
@@ -46,7 +46,7 @@ public class ExceptionHandlerMiddleware
             await context.Response.WriteAsJsonAsync(new Response
             {
                 Code = exception.StatusCode,
-                Message = exception.Message
+                Message = exception.TitleMessage
             });
         }
         catch (Exception exception)
