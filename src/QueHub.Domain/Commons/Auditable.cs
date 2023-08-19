@@ -6,5 +6,5 @@ public abstract class Auditable : BaseEntity
 
     public DateTime CreateAt { get; set; } = DateTime.UtcNow;
 
-    public DateTime? UpdateAt { get; set; }
+    public DateTime UpdateAt { get; set; }
 }

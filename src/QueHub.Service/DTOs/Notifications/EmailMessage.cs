@@ -1,6 +1,6 @@
 ﻿namespace QueHub.Service.DTOs.Notifications;
 
-public class SmsMessage
+public class EmailMessage
 {
     public string Recipent { get; set; } = String.Empty;
 

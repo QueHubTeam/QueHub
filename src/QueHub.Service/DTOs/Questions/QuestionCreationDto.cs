@@ -1,4 +1,5 @@
-﻿namespace QueHub.Service.DTOs.Questions;
+﻿using Microsoft.AspNetCore.Http;
+namespace QueHub.Service.DTOs.Questions;
 
 public class QuestionCreationDto
 {
@@ -6,7 +7,7 @@ public class QuestionCreationDto
 
     public long CategoryId { get; set; }
 
-    public string? ImagePath { get; set; } = string.Empty;
+    public IFormFile ImagePath { get; set; } = default!;
 
     public string Title { get; set; } = string.Empty;
 

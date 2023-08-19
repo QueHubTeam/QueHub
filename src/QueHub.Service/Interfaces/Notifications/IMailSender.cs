@@ -1,8 +1,7 @@
 ﻿using QueHub.Service.DTOs.Notifications;
-
 namespace QueHub.Service.Interfaces.Notifications;
 
-public interface ISmsSender
+public interface IMailSender
 {
-    public Task<bool> SendAsync(SmsMessage smsMessage);
+    public Task<bool> SendAsync(EmailMessage message);
 }
