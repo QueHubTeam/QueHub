@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
+using QueHub.DAL.IRepositories;
 using QueHub.Domain.Entity.User;
 using QueHub.Service.Common.Helpers;
 using QueHub.Service.Common.Security;
 using QueHub.Service.Dtos.PersonsAuth;
+using QueHub.Service.DTOs.Notifications;
+using QueHub.Service.DTOs.Security;
 using QueHub.Service.DTOs.Users;
 using QueHub.Service.Exceptions.Auth;
 using QueHub.Service.Exceptions.Users;
@@ -16,7 +19,7 @@ namespace QueHub.Service.Services.Students;
 public class AuthUserService : IAuthUserService
 {
     private readonly IMemoryCache _memoryCache;
-    private readonly IUserRepasitory _personRepository;
+    private readonly IRepository<UserEntity> _personRepository;
     private readonly IMailSender _mailSender;
     private readonly ITokenUserService _tokenPersonService;
     private readonly IFileService _fileService;
@@ -27,7 +30,7 @@ public class AuthUserService : IAuthUserService
     private const int VERIFICATION_MAXIMUM_ATTEMPTS = 3;
 
     public AuthUserService(IMemoryCache memoryCache,
-        IPerson personRepository,
+        IRepository<UserEntity> personRepository,
         IMailSender mailSender,
         ITokenUserService tokenPersonService,
         IFileService fileService)
@@ -44,7 +47,7 @@ public class AuthUserService : IAuthUserService
 #pragma warning disable
     public async Task<(bool Result, int CashedMinutes)> RegisterAsync(UserCreationDto registerDto)
     {
-        var student = await _personRepository.GetByEmailAsync(registerDto.Email);
+        var student = await _personRepository.SelectAsync(x => x.Email == registerDto.Email);
         if (student is not null) throw new UserAlreadyExistsException(registerDto.Email);
 
         // delete if exists user by this phone number
@@ -137,13 +140,14 @@ public class AuthUserService : IAuthUserService
 
         person.CreateAt = person.UpdateAt = TimeHelper.GetDateTime();
 
-        var dbResult = await _personRepository.CreateAsync(person);
+        await _personRepository.AddAsync(person);
+        var dbResult = await .SaveAsync();
         return dbResult > 0;
     }
 
     public async Task<(bool Result, string Token)> LoginAsync(UserLoginDto loginDto)
     {
-        var student = await _personRepository.GetByEmailAsync(loginDto.Email);
+        var student = await _personRepository.SelectAsync(x => x.Email == loginDto.Email);
         if (student is null) throw new UserNotFoundException();
 
         var hasherResult = PasswordHasher.Verify(loginDto.Password, student.Password, student.Salt);
@@ -153,7 +157,4 @@ public class AuthUserService : IAuthUserService
 
         return (Result: true, Token: token);
     }
-
-
-
 }
