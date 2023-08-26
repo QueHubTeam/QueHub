@@ -10,6 +10,8 @@ using GameMasterArena.Service.Dtos.Persons;
 using GameMasterArena.Service.Interfaces.Auth;
 using GameMasterArena.Service.Interfaces.Common;
 using GameMasterArena.Service.Interfaces.Persons;
+using QueHub.Service.Common.Helpers;
+using QueHub.Service.DTOs.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,13 +44,13 @@ public class PersonService : IPersonService
         return (IList<PersonViewModel>)teams;
     }
 
-    public async Task<PersonViewModel> GetByIdAsync(long teamId)
+    public async Task<UserVerifyDto> GetByIdAsync(long teamId)
     {
         var teams = await _repository.GetByIdAsync(teamId);
         return teams;
     }
 
-    public async Task<bool> UpdateAsync(PersonUpdateDto dto)
+    public async Task<bool> UpdateAsync(UserUp dto)
     {
         var team = await _repository.GetByIdAsync(_identity.Id);
         if (team is null) throw new TeamNotFoundException();

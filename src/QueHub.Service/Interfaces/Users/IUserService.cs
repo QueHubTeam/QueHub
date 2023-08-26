@@ -4,8 +4,6 @@ namespace QueHub.Service.Interfaces.Persons;
 
 public interface IUserService
 {
-
-
     public Task<IList<UserResultDto>> GetAllAsync();
 
     public Task<UserResultDto> GetByIdAsync(long teamId);
