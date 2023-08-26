@@ -1,10 +1,8 @@
-﻿using QueHub.Service.DTOs.Users;
-//using QueHub.Service.DTOs.Use;
-using QueHub.Service.Interfaces.Auth;
-using QueHub.Service.Validators.Dtos.Students;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QueHub.Service.Dtos.PersonsAuth;
+using QueHub.Service.DTOs.Users;
+using QueHub.Service.Interfaces.Persons;
+using QueHub.Service.Validators.Dtos.Students;
 
 namespace GameMasterArena.Api.Controller;
 
@@ -12,11 +10,11 @@ namespace GameMasterArena.Api.Controller;
 [ApiController]
 public class UserAuthController : ControllerBase
 {
-    private readonly IAuthPersonService _authService;
+    private readonly IAuthUserService _authService;
 
-    public UserAuthController(IAuthPersonService auth)
+    public UserAuthController(IAuthUserService auth)
     {
-        this._authService  = auth;
+        this._authService = auth;
     }
 
 
@@ -39,14 +37,14 @@ public class UserAuthController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> SendCodeRegisterAsync(string mail)
     {
-       var serviceResult = await _authService.SendCodeForRegisterAsync(mail);
+        var serviceResult = await _authService.SendCodeForRegisterAsync(mail);
         return Ok(new { serviceResult.Result, serviceResult.CashedVerificationMinutes });
     }
-    
+
 
     [HttpPost("register/verify")]
     [AllowAnonymous]
-    public async Task<IActionResult> VerifyRegisterAsync([FromBody] UserVerificationDto verifyDto )
+    public async Task<IActionResult> VerifyRegisterAsync([FromBody] UserVerifyDto verifyDto)
     {
         var servisResult = await _authService.VerifyRegisterAsync(verifyDto.Email, verifyDto.Code);
         return Ok(new { servisResult.Result, servisResult.Token });
